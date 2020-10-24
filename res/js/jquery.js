@@ -27,7 +27,16 @@ $(function () {
     })
 
 
+    $(".like-button").click(function () {
+        $(this).toggleClass("liked");
+    })
 })
+
+
+
+
+
+
 
 function addPost(postData) {
     // Variables from post.
@@ -45,7 +54,7 @@ function addPost(postData) {
     let postAuthor = $("<div class='post-author'>")
     let postAuthorInfo = $("<span class='post-author-info'>")
     let postAuthorAvatar = $("<img alt='Post author'>").src(authorData.avatar)
-    let postAuthorName = £("<small>").text(authorData.firstname + " " + authorData.lastname)
+    let postAuthorName = $("<small>").text(authorData.firstname + " " + authorData.lastname)
     postAuthorInfo.append(postAuthorAvatar, postAuthorName)
     let postCreateTime = $("<small>").text(createTimeVal)
     postAuthor.append(postAuthorInfo, postCreateTime)
