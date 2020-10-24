@@ -54,6 +54,7 @@ function addPost(postData) {
     // Creating post-image div.
     if (mediaData !== null) {
         // Creates media div.
+        // TODO implement for image and video media.
     }
 
     // Creating post-title div.
