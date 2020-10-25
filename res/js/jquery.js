@@ -86,7 +86,7 @@ function addPost(postData) {
     postAuthorInfo.append(postAuthorAvatar, postAuthorName)
     let postCreateTime = $("<small>").text(createTimeVal)
     postAuthor.append(postAuthorInfo, postCreateTime)
-    post.append(postAuthorInfo)
+    post.append(postAuthor)
 
     // Creating post-image div.
     if (mediaData !== null) {
