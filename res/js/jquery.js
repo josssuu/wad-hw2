@@ -1,3 +1,9 @@
+function initButtonToggle() {
+    $(".like-button").click(function () {
+        $(this).toggleClass("liked");
+    })
+}
+
 $(function () {
 
     loadUserInfo().then(function (response) {
@@ -11,6 +17,7 @@ $(function () {
         for (let post of response) {
             addPost(post)
         }
+        initButtonToggle();
     }).catch(function () {
         alert("Error loading posts info!")
     })
@@ -28,9 +35,7 @@ $(function () {
     })
 
 
-    $(".like-button").click(function () {
-        $(this).toggleClass("liked");
-    })
+
 })
 
 function loadUserInfo() {
