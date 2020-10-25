@@ -1,6 +1,13 @@
-function initButtonToggle() {
+function initLikeButtonToggle() {
     $(".like-button").click(function () {
         $(this).toggleClass("liked");
+    })
+}
+
+function initSubscribeButtonToggle() {
+    $(".subscribe-button").click(function () {
+        $(this).toggleClass("subscribed");
+        $(this).text("Followed");
     })
 }
 
@@ -17,7 +24,7 @@ $(function () {
         for (let post of response) {
             addPost(post)
         }
-        initButtonToggle();
+        initLikeButtonToggle();
     }).catch(function () {
         alert("Error loading posts info!")
     })
@@ -26,6 +33,7 @@ $(function () {
         for (let profile of response) {
             addProfile(profile)
         }
+        initSubscribeButtonToggle();
     }).catch(function () {
         alert("Error loading profiles info!")
     })
@@ -162,7 +170,7 @@ function addProfile(profileData) {
     // Creating name div.
     let nameDiv = $("<div class='nameDiv'>")
     let nameValue = $("<span class='profile_name'>")
-    nameValue.append(firstName, lastName)
+    nameValue.append(firstName, " ", lastName)
     nameDiv.append(nameValue)
     profileTab.append(nameDiv)
 
