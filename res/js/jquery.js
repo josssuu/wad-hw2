@@ -15,6 +15,14 @@ $(function () {
         alert("Error loading posts info!")
     })
 
+    loadProfilesInfo().then(function (response) {
+        for (let profile of response) {
+            addProfile(profile)
+        }
+    }).catch(function () {
+        alert("Error loading profiles info!")
+    })
+
     $(".avatar").click(function () {
         $(".dropdownmenu").toggle()
     })
@@ -40,6 +48,18 @@ function loadUserInfo() {
 function loadPostsInfo() {
     return $.get({
         url: "https://private-anon-f06dcd018e-wad20postit.apiary-mock.com/posts",
+        success: function (response) {
+            return response
+        },
+        error: function () {
+            alert("error")
+        }
+    })
+}
+
+function loadProfilesInfo() {
+    return $.get({
+        url: "https://private-anon-44b5c293a1-wad20postit.apiary-mock.com/profiles",
         success: function (response) {
             return response
         },
@@ -117,4 +137,36 @@ function addPost(postData) {
 
     // Adding post to main-container div.
     $(".main-container").append(post)
+}
+
+function addProfile(profileData) {
+    // Variables from profile data.
+    let firstName = profileData.firstname
+    let lastName = profileData.lastname
+    let avatar = profileData.avatar
+
+    // Creating post div.
+    let profileTab = $("<div class='profileTab'>")
+
+    // Creating profile-picture div.
+    let profilePictureDiv = $("<div class='profilePicture'>")
+    let picture = $("<img alt='Profile picture'>").attr("src", avatar)
+    profilePictureDiv.append(picture)
+    profileTab.append(profilePictureDiv)
+
+    // Creating name div.
+    let nameDiv = $("<div class='nameDiv'>")
+    let nameValue = $("<span class='profile_name'>")
+    nameValue.append(firstName, lastName)
+    nameDiv.append(nameValue)
+    profileTab.append(nameDiv)
+
+    // Creating Subscribe-button
+    let subscribeDiv = $("<div class='subscribeDiv'>")
+    let subscribeButton = $("<button type='button' name='subscribe' class='subscribe-button'>").text("Follow")
+    subscribeDiv.append(subscribeButton)
+    profileTab.append(subscribeDiv)
+
+    // Adding post to main-container div.
+    $(".profiles-container").append(profileTab)
 }
