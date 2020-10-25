@@ -1,29 +1,23 @@
 $(function () {
-    let dropdownmenu_showing = false
+
+    loadUserInfo().then(function (response) {
+        $(".avatar").attr("src", response.avatar)
+        createDropdownmenu(response)
+    }).catch(function () {
+        alert("Error loading user info!")
+    })
+
+    loadPostsInfo().then(function (response) {
+        console.log(response)
+        for (let post of response) {
+            addPost(post)
+        }
+    }).catch(function () {
+        alert("Error loading posts info!")
+    })
 
     $(".avatar").click(function () {
-        console.log("Avatar clicked!")
-        if (dropdownmenu_showing) {
-            $(".dropdown-menu").remove()
-            dropdownmenu_showing = false
-        } else {
-            // TODO Peab user info sellelt lehelt võtma:  https://wad20postit.docs.apiary.io/#reference/0/users-collection/get-user-information
-            let nameVal = "nimi"
-            let emailVal = "email"
-
-            let name = $("<tr>").append($("<td>").append($("<p id='name'>").text(nameVal)))
-            let email = $("<tr>").append($("<td>").append($("<p id='email'>").text(emailVal)))
-            let browse = $("<tr>").append($("<td>").append($("<a href='browse.html'>").text("Browse")))
-            let logout = $("<tr>").append($("<td>").append($("<a href='login.html'>").text("Log Out")))
-
-            let dropdownmenu = $("<div class='dropdown-menu'>")
-
-            dropdownmenu.append(name, email, browse, logout)
-
-            $("header").append(dropdownmenu)
-
-            dropdownmenu_showing = true
-        }
+        $(".dropdownmenu").toggle()
     })
 
 
@@ -32,11 +26,46 @@ $(function () {
     })
 })
 
+function loadUserInfo() {
+    return $.get({
+        url: "https://private-anon-f06dcd018e-wad20postit.apiary-mock.com/users/1",
+        success: function (response) {
+            return response
+        },
+        error: function () {
+            alert("error")
+        }
+    })
+}
 
+function loadPostsInfo() {
+    return $.get({
+        url: "https://private-anon-f06dcd018e-wad20postit.apiary-mock.com/posts",
+        success: function (response) {
+            return response
+        },
+        error: function () {
+            alert("error")
+        }
+    })
+}
 
+function createDropdownmenu(user) {
+    let nameVal = user.firstname + " " + user.lastname
+    let emailVal = user.email
 
+    let name = $("<tr>").append($("<td>").append($("<p id='name'>").text(nameVal)))
+    let email = $("<tr>").append($("<td>").append($("<p id='email'>").text(emailVal)))
+    let browse = $("<tr>").append($("<td>").append($("<a href='browse.html'>").text("Browse")))
+    let logout = $("<tr>").append($("<td>").append($("<a href='login.html'>").text("Log Out")))
 
+    let dropdownmenu = $("<div class='dropdownmenu'>")
 
+    dropdownmenu.append(name, email, browse, logout)
+    dropdownmenu.hide()
+
+    $("header").append(dropdownmenu)
+}
 
 function addPost(postData) {
     // Variables from post.
@@ -53,7 +82,7 @@ function addPost(postData) {
     // Creating post-author div.
     let postAuthor = $("<div class='post-author'>")
     let postAuthorInfo = $("<span class='post-author-info'>")
-    let postAuthorAvatar = $("<img alt='Post author'>").src(authorData.avatar)
+    let postAuthorAvatar = $("<img alt='Post author'>").attr("src", authorData.avatar)
     let postAuthorName = $("<small>").text(authorData.firstname + " " + authorData.lastname)
     postAuthorInfo.append(postAuthorAvatar, postAuthorName)
     let postCreateTime = $("<small>").text(createTimeVal)

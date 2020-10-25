@@ -206,7 +206,7 @@ nav div.avatar-container {
 
 /* DROP DOWN MENU */
 
-.dropdown-menu {
+.dropdownmenu {
     position: absolute;
     right: 0;
     display: table;
@@ -214,7 +214,7 @@ nav div.avatar-container {
     background-color: whitesmoke;
 }
 
-.dropdown-menu td {
+.dropdownmenu td {
     padding: 10px;
     height: 100%;
     border: 1px solid lightgray;
@@ -222,7 +222,7 @@ nav div.avatar-container {
     text-align: left;
 }
 
-.dropdown-menu td * {
+.dropdownmenu td * {
     padding: 0;
     margin: 0;
 }
