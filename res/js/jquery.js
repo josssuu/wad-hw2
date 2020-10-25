@@ -8,7 +8,6 @@ $(function () {
     })
 
     loadPostsInfo().then(function (response) {
-        console.log(response)
         for (let post of response) {
             addPost(post)
         }
@@ -91,8 +90,17 @@ function addPost(postData) {
 
     // Creating post-image div.
     if (mediaData !== null) {
-        // Creates media div.
-        // TODO implement for image and video media.
+        if (mediaData.type === "image") {
+            let postImage = $("<div class='post-image'>")
+            let image = $("<img alt=''>").attr("src", mediaData.url)
+            postImage.append(image)
+            post.append(postImage)
+        } if (mediaData.type === "video") {
+            let postVideo = $("<div class='post-image'>")
+            let video = $("<video controls>").attr("src", mediaData.url).text("Not supported")
+            postVideo.append(video)
+            post.append(postVideo)
+        }
     }
 
     // Creating post-title div.
